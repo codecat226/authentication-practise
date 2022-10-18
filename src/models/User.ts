@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, model, Document } from "mongoose";
 
 export interface UserDocument extends Document {
   email: string;
@@ -25,7 +25,7 @@ const userSchema: Schema = new mongoose.Schema({
     required: [true, "User must provide a password"],
     match: [
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Passwrod must be at least eight characters, with at least one uppercase letter, one lowercase letter, one number and one special character",
+      "Password must be at least eight characters, with at least one uppercase letter, one lowercase letter, one number and one special character",
     ],
   },
   isAdmin: {
@@ -38,4 +38,4 @@ const userSchema: Schema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model<UserDocument>("User", userSchema);
+export const User = model<UserDocument>("User", userSchema);
