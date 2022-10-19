@@ -1,6 +1,7 @@
-import mongoose, { Schema, model, Document } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 export interface UserDocument extends Document {
+  user_id: string;
   email: string;
   password: string;
   isAdmin: number;
@@ -8,25 +9,28 @@ export interface UserDocument extends Document {
 }
 
 const userSchema: Schema = new mongoose.Schema({
+  user_id: {
+    type: String,
+  },
   email: {
     type: String,
-    required: [true, "Please enter an email address"],
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      "Please enter a valid email address",
-    ],
-    unique: true,
     trim: true,
-    lowercase: true,
+    required: [true, "email can not be empty"],
+    unique: true,
+    // minlength: 3,
+    // match: [
+    //   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    //   "Please enter a valid email address",
+    // ],
   },
   password: {
     type: String,
-    minlength: [8, "Password must be at least 8 characters"],
-    required: [true, "User must provide a password"],
-    match: [
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Password must be at least eight characters, with at least one uppercase letter, one lowercase letter, one number and one special character",
-    ],
+    required: true,
+    trim: true,
+    // match: [
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    //   "Password must be at least eight characters, with at least one uppercase letter, one lowercase letter, one number and one special character",
+    // ],
   },
   isAdmin: {
     type: Number,
@@ -34,8 +38,8 @@ const userSchema: Schema = new mongoose.Schema({
   },
   isVerified: {
     type: Number,
-    default: 0, //0 = user is not verified
+    default: 0,
   },
 });
 
-export const User = model<UserDocument>("User", userSchema);
+export default mongoose.model<UserDocument>("User", userSchema);

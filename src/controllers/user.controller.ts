@@ -5,7 +5,24 @@ import express, {
   RequestHandler,
 } from "express";
 import { decryptPassword, securePassword } from "../config/password";
-import { User } from "../models/User";
+import User from "../models/User";
+import { sendVerifyEmail } from "../utils/verifyEmail";
+import { v4 } from "uuid";
+
+export const showUsers: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const Users = await User.find();
+    res.status(200).send(Users);
+  } catch (error) {
+    res.status(500).send({
+      message: "server error",
+    });
+  }
+};
 
 export const showRegister: RequestHandler = (
   req: Request,
@@ -27,26 +44,27 @@ export const registerUser: RequestHandler = async (
   next: NextFunction
 ) => {
   try {
-    const { email, password } = req.body;
-    // console.log(req.body);
-    const hashedPW = await securePassword(password);
+    const hashedPW = await securePassword(req.body.password);
     const newUser = new User({
-      email: email,
+      user_id: v4(),
+      email: req.body.email,
       password: hashedPW,
       isAdmin: 0,
       isVerified: 0,
     });
-    // console.log(newUser);
-    // console.log(mongoose.connection.readyState);
+    console.log(newUser);
     const userData = await newUser.save();
     if (userData) {
-      res.redirect("/login");
+      sendVerifyEmail(userData.email, userData._id);
+      res
+        .status(201)
+        .send("registration successful, please verify your email address!");
     } else {
       res.status(404).send("route not found");
     }
   } catch (error) {
     res.status(500).send({
-      message: "server error",
+      message: "server error, user could not be made",
     });
   }
 };
@@ -119,6 +137,34 @@ export const logoutUser: RequestHandler = async (
         res.status(200).redirect("/login");
       }
     });
+  } catch (error) {
+    res.status(500).send({
+      message: "server error",
+    });
+  }
+};
+
+export const verifyUser: RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.query.id;
+
+    const userUpdated = await User.updateOne(
+      { _id: id },
+      {
+        $set: {
+          isVerified: 1,
+        },
+      }
+    );
+    if (userUpdated) {
+      res.render("verify", { message: "verification successful" });
+    } else {
+      res.render("verify", { message: "verification unsuccessful" });
+    }
   } catch (error) {
     res.status(500).send({
       message: "server error",

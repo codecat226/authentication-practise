@@ -4,12 +4,13 @@ import { dev } from "./config/index";
 import userRouter from "./routes/user.routes";
 import session from "express-session";
 
+const app = express();
+
 declare module "express-session" {
   interface Session {
     user: string;
   }
 }
-const app = express();
 
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
