@@ -34,6 +34,6 @@ app.use("/users", userRouter);
 app.use("/admin", adminRouter);
 
 app.listen(PORT, async () => {
-  console.log(`server is running on http://localhost:${PORT}`);
+  console.log(`server is running on http://localhost:${PORT}/users/login`);
   await connectDB();
 });
