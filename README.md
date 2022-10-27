@@ -1,3 +1,4 @@
 # User management app with Express and EJS
 
-## simple user authentication using express-session
+## user authentication using express session
+## admin roles with seperate login
