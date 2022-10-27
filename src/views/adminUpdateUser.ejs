@@ -1,0 +1,39 @@
+<%- include("./layouts/header.ejs") %>
+<h1>Update user information</h1>
+<form method="post">
+  <input
+  type="text"
+  name="name"
+  placeholder="name"
+  size="30"
+  value="<%=user.name%>"
+  />
+  <input
+    type="email"
+    name="email"
+    placeholder="email address"
+    size="40"
+    value="<%=user.email%>"
+  />
+  <div>
+    <label for="verify">Verify: </label>
+    <input type="radio" name="verify" value="1"
+    <% if(user.isVerified === 1){ %>
+    checked
+    <%}%>
+    />
+  </div>
+  <div>
+    <label for="verify">Unverify: </label>
+    <input type="radio" name="verify" value="0"
+    <% if(user.isVerified === 0){ %>
+    checked
+    <%}%>
+    />
+  </div>
+  <button type="submit">Update information</button>
+  <%if(typeof message !== 'undefined'){%>
+    <h3 style="color: blue"><%=message%></h3>
+    <%}%> 
+</form>
+<a style="margin-left: 2rem" href="/admin/dashboard">Back to dashboard</a>

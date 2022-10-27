@@ -1,14 +1,20 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface UserDocument extends Document {
+  name: string;
   user_id: string;
   email: string;
   password: string;
   isAdmin: number;
   isVerified: number;
+  token: string;
 }
 
 const userSchema: Schema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, "must provide name"],
+  },
   user_id: {
     type: String,
   },
@@ -39,6 +45,10 @@ const userSchema: Schema = new mongoose.Schema({
   isVerified: {
     type: Number,
     default: 0,
+  },
+  token: {
+    type: String,
+    default: "",
   },
 });
 

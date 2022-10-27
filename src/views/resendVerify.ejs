@@ -1,0 +1,15 @@
+<%- include("./layouts/header.ejs") %>
+<h1>Resend verification email</h1>
+<form action="/users/resend-verify" method="post">
+  <input
+    type="email"
+    name="email"
+    placeholder="email address"
+    required
+  />
+  <button type="submit">Send link</button>
+  <%if(typeof message !== 'undefined'){%>
+    <h3 style="color: blue"><%=message%></h3>
+    <%}%> 
+</form>
+<a href="/users/login">Back to login</a>

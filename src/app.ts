@@ -2,6 +2,7 @@ import express from "express";
 import { connectDB } from "./config/db";
 import { dev } from "./config/index";
 import userRouter from "./routes/user.routes";
+import adminRouter from "./routes/admin.routes";
 import session from "express-session";
 
 const app = express();
@@ -17,6 +18,7 @@ app.set("view engine", "ejs");
 
 const PORT = dev.PORT;
 
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -28,10 +30,9 @@ app.use(
   })
 );
 
-app.use("/", userRouter);
-app.get("/test", (req, res) => {
-  res.render("test");
-});
+app.use("/users", userRouter);
+app.use("/admin", adminRouter);
+
 app.listen(PORT, async () => {
   console.log(`server is running on http://localhost:${PORT}`);
   await connectDB();

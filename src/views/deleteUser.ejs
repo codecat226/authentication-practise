@@ -1,0 +1,12 @@
+<%- include("./layouts/header.ejs") %>
+<h1>Delete User</h1>
+<p>Are you sure you want to delete user?</p>
+<form action="/users/delete-user" method="POST">
+  <button type="submit">Delete</button>
+</form>
+</br>
+<%if(typeof message !== 'undefined'){%>
+  <h3 style="color: blue"><%=message%></h3>
+  <%}%> 
+</br>
+<a href="/users/home">Back to home</a>

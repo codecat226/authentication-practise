@@ -1,6 +1,6 @@
 <%- include("./layouts/header.ejs") %>
 <h1>Log in</h1>
-<form action="/login" method="post">
+<form action="/users/login" method="post">
   <input
     type="email"
     name="email"
@@ -14,4 +14,13 @@
     required
   />
   <button type="submit">Login</button>
+  <%if(typeof message !== 'undefined'){%>
+    <h3 style="color: blue"><%=message%></h3>
+    <%}%> 
 </form>
+</br>
+<a href="/users/resend-verify">Resend verification email</a>
+</br>
+<a href="/users/forgot-password">Forgot password</a>
+</br>
+<a href="/users/register">Register</a>

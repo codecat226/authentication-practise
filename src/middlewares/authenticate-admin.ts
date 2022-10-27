@@ -9,7 +9,7 @@ export const isLoggedIn = async (
     if (req.session.user) {
     } else {
       //if user is not login, direct to login page
-      res.redirect("/users/login");
+      res.redirect("/admin/login");
     }
     next();
   } catch (error) {
@@ -25,7 +25,7 @@ export const isLoggedOut = async (
   try {
     if (req.session.user) {
       //if user was logged in, redirect to home
-      return res.redirect("/users/home");
+      return res.redirect("/admin/home");
     }
     next();
   } catch (error) {

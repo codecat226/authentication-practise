@@ -1,0 +1,31 @@
+<%- include("./layouts/header.ejs") %>
+<h1 style="margin-bottom: 2rem">Dashboard</h1>
+<div class="add-user">
+  <a href="/admin/add-user">Add new user</a>
+</div>
+<form>
+  <label for="search">Search user:</label>
+  <input name="search" type="text"/>
+  <button type="submit">Search</button>
+</form>
+
+</br>
+<% if(users.length>0){ %>
+  <% for(let x=0; x<users.length; x++){%>
+    <div style="margin: 2rem;border:1px solid black;">
+      <h3>Name: <%=users[x].name%></h3>
+      <p>Email: <%=users[x].email%></p>
+      <p>isVerified: <%=users[x].isVerified%></p>
+      <a style="margin: 2rem" href="/admin/update-user?id=<%=users[x]._id%>">Update user info</a>
+      <a style="margin: 2rem" href="/admin/delete-user?id=<%=users[x]._id%>">Delete user</a>
+    </div>
+<% }%> <%}%>
+<% if(currentP > 1){ %>
+  <a href="?page=<%=prevP%>">Previous</a>
+  <% } %> <% for(let pageN=1; pageN<=totalP; pageN++ ){ %>
+  <a href="?page=<%=pageN%>"><%=pageN%></a>
+  <% } %> <% if(currentP < totalP){ %>
+  <a href="?page=<%=nextP%>">Next</a>
+  <% } %>
+  </br>
+  <a href="/admin/home">Back to home</a>

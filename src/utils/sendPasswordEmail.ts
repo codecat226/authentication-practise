@@ -1,10 +1,12 @@
 import nodemailer from "nodemailer";
 import { dev } from "../config/index";
 
-export const sendVerifyEmail = async (
+export const sendPasswordEmail = async (
   email: string,
   _id: string,
-  title: string
+  title: string,
+  token: string,
+  url: string
 ) => {
   try {
     //create transporter
@@ -22,7 +24,8 @@ export const sendVerifyEmail = async (
       from: dev.auth_email,
       to: email, //list of receivers
       subject: title,
-      html: `<p>Hi! <a href="http://localhost:3006/users/verify?id=${_id}">Please click on this link to verify your email address.</p>`,
+      //CHECK this url string if correct syntax
+      html: `<p>Hi! <a href="http://localhost:3006/${url}/reset-password?token=${token}">Please click on this link to reset password.</p>`,
     };
 
     await transporter.sendMail(mailOptions, (error, info) => {

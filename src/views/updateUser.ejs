@@ -1,30 +1,23 @@
 <%- include("./layouts/header.ejs") %>
-<h1>Registration</h1>
-<form action="/users/register" method="post" >
+<h1>Update user information</h1>
+<form method="post">
   <input
   type="text"
   name="name"
   placeholder="name"
-  required
+  size="30"
+  value="<%=user.name%>"
   />
-</br>
   <input
     type="email"
     name="email"
     placeholder="email address"
-    required
+    size="40"
+    value="<%=user.email%>"
   />
-</br>
-  <input
-    type="password"
-    name="password"
-    placeholder="password"
-    required
-  />
-</br>
-  <button type="submit">Register</button>
+  <button type="submit">Update information</button>
   <%if(typeof message !== 'undefined'){%>
     <h3 style="color: blue"><%=message%></h3>
     <%}%> 
 </form>
-<a href="/users/login">Back to login</a>
+<a style="margin-left: 2rem" href="/users/home">Back to home</a>
