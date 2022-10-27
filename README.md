@@ -1,4 +1,4 @@
-# User management app with Express and EJS
+# User management app with MongoDB, Express, Typescript, EJS
 
 ### - user authentication using express session
 ### - admin roles with seperate login
